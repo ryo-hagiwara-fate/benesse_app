@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
+
 class WelcomeScreen extends StatefulWidget {
   static String id = "welcome_screen"; // static宣言された変数は、宣言されたクラスに紐づいていることになる。。はず。。
   @override
