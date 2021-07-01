@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "875650281385",
+    "project_id": "template-app-26ee7",
+    "storage_bucket": "template-app-26ee7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875650281385:android:5018d3e8bbf40cc975deb8",
+        "android_client_info": {
+          "package_name": "com.example.template_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875650281385-4dbjmcp4hfuuaoo470kf8ohep8osmn0n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3Gee32cVIYrQFJXZUsYsvWVgoq2Nuk_o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "875650281385-4dbjmcp4hfuuaoo470kf8ohep8osmn0n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875650281385:android:5298d29f5f6aa42375deb8",
+        "android_client_info": {
+          "package_name": "com.taroubenesse2021.template_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875650281385-4dbjmcp4hfuuaoo470kf8ohep8osmn0n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3Gee32cVIYrQFJXZUsYsvWVgoq2Nuk_o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "875650281385-4dbjmcp4hfuuaoo470kf8ohep8osmn0n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
