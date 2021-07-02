@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pie_chart/pie_chart.dart';
+
+//https://pub.dev/packages/pie_chart
 
 class ThirdDesign extends StatelessWidget {
   @override
@@ -6,15 +9,17 @@ class ThirdDesign extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.purple,
       body: Center(
-        child: Text(
-          "Third Design Here",
-          style: TextStyle(
-              fontSize: 20
-          ),
-        ),
+        child: PieChart(
+          dataMap: dataMap,
+        )
       ),
     );
   }
 }
 
-
+Map<String, double> dataMap = {
+  "Flutter": 5,
+  "React": 3,
+  "Xamarin": 2,
+  "Ionic": 2,
+};

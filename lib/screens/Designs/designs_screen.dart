@@ -37,8 +37,8 @@ class _DesignsScreenState extends State<DesignsScreen> {
         items: [
           BottomNavyBarItem(icon: Icon(Icons.home), title: Text("GridView", style: TextStyle(fontSize: 18),), activeColor: Colors.lightBlueAccent, textAlign: TextAlign.center),
           BottomNavyBarItem(icon: Icon(Icons.cake), title: Text("ListView", style: TextStyle(fontSize: 18),), activeColor: Colors.deepPurple, textAlign: TextAlign.center),
-          BottomNavyBarItem(icon: Icon(Icons.catching_pokemon), title: Text("First", style: TextStyle(fontSize: 18),), activeColor: Colors.deepOrange, textAlign: TextAlign.center),
-          BottomNavyBarItem(icon: Icon(Icons.local_drink), title: Text("First", style: TextStyle(fontSize: 18),), activeColor: Colors.blueGrey, textAlign: TextAlign.center),
+          BottomNavyBarItem(icon: Icon(Icons.catching_pokemon), title: Text("PieChart1", style: TextStyle(fontSize: 18),), activeColor: Colors.deepOrange, textAlign: TextAlign.center),
+          BottomNavyBarItem(icon: Icon(Icons.local_drink), title: Text("fl_charts", style: TextStyle(fontSize: 18),), activeColor: Colors.blueGrey, textAlign: TextAlign.center),
           BottomNavyBarItem(icon: Icon(Icons.handyman), title: Text("First", style: TextStyle(fontSize: 18),), activeColor: Colors.brown, textAlign: TextAlign.center),
         ],
         selectedIndex: _currentIndex,

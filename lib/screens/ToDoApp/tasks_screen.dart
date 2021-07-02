@@ -17,12 +17,9 @@ class TasksScreen extends StatelessWidget { //Providerのlistenがあるのでst
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  GestureDetector(
-                    onTap: (){ Navigator.pop(context); },
-                    child: CircleAvatar(
-                      child: Icon(Icons.list, size: 35, color: Colors.lightBlueAccent,),
-                      radius: 30, backgroundColor: Colors.white,),
-                  ),
+                  CircleAvatar(
+                    child: Icon(Icons.list, size: 35, color: Colors.lightBlueAccent,),
+                    radius: 30, backgroundColor: Colors.white,),
                   SizedBox(height: 5,),
                   Text("nabedo", style: TextStyle(
                     color: Colors.white,

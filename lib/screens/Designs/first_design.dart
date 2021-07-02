@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:template_app/screens/Designs/user_details_in_design_screen.dart';
 
 class FirstDesign extends StatelessWidget {
   @override
@@ -17,55 +18,62 @@ class FirstDesign extends StatelessWidget {
           itemCount: UserList.length,
           itemBuilder: (BuildContext context, int index) {
             final userData = UserList[index];
-            return Card(
-              elevation: 7,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Container(
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          height: 80,
-                          width: 80,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all( Radius.circular(50.0)),
-                            border: Border.all(
-                              color: BorderColors[index%5], // ５パターンの色で回す
-                              width: 3.0,
+            return GestureDetector(
+              onTap: (){ print("Cardがタップされました！"); },
+              onLongPress: (){ Navigator.push(context,
+                  MaterialPageRoute(builder: (context)=>UserDetailsInDesignScreen(userData: UserList[index])));
+              },
+              child: Card(
+                elevation: 7,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            height: 80,
+                            width: 80,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all( Radius.circular(50.0)),
+                              border: Border.all(
+                                color: BorderColors[index%5], // ５パターンの色で回す
+                                width: 3.0,
+                              ),
+                              image: DecorationImage(
+                                image: ExactAssetImage("images/${userData.image}.png"),
+                                fit: BoxFit.contain
+                              )
                             ),
-                            image: DecorationImage(
-                              image: ExactAssetImage("images/${userData.image}.png"),
-                              fit: BoxFit.contain
-                            )
                           ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(userData.userName, style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all( Radius.circular(10.0)),
-                                  color: Colors.red,
-                                ),
-                                child: Text(userData.subject, style: TextStyle(fontSize: 20),)
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 8,),
-                    Text("「${userData.textbook}」", style: TextStyle(fontSize: 17),),
-                    SizedBox(height: 10,),
-                    Text(userData.duration, style: TextStyle(fontSize: 37),)
-                  ],
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(userData.userName, style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all( Radius.circular(10.0)),
+                                    color: Colors.red,
+                                  ),
+                                  child: Text(userData.subject, style: TextStyle(fontSize: 20),)
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 8,),
+                      Text("「${userData.textbook}」", style: TextStyle(fontSize: 17),),
+                      SizedBox(height: 10,),
+                      Text(userData.duration, style: TextStyle(fontSize: 37),)
+                    ],
+                  ),
                 ),
               ),
             );
