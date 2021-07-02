@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:template_app/components/rounded_button.dart';
+import 'package:template_app/screens/users_control/edit_user_details.dart';
+
+import '../chat_screen.dart';
 
 // 参考 : https://qiita.com/kazuhideoki/items/ffe1b92aa17565ef8e4c
 
@@ -20,8 +24,6 @@ class _UserDetailsState extends State<UserDetails> {
     try {
       final user = _auth.currentUser;
       loggedInUser = user;
-      // print(loggedInUser!.email);
-      // print(loggedInUser!.uid);
     } catch (e) {
       print(e);
     }
@@ -35,17 +37,30 @@ class _UserDetailsState extends State<UserDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(onPressed: () { Navigator.pushNamed(context, ChatScreen.id); }, icon: Icon(Icons.chat_bubble),),
         title: Text("user details"),
         centerTitle: true,
       ),
       body: SafeArea(
-        child: FutureBuilder<QuerySnapshot>(
+        child: FutureBuilder<DocumentSnapshot>(
           future: getUserData(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              // ★3 `List<DocumentSnapshot>`をsnapshotから取り出す。
-              final List<DocumentSnapshot> documents = snapshot.data!.docs;
-              return Center(child: Text(documents[0]["userName"]));
+              print("${snapshot.data!["userName"]}がやってきた！");
+              return Center(child: Column(
+                children: [
+                  Text(snapshot.data!["userName"], style: TextStyle(fontSize: 30),),
+                  Text(snapshot.data!["universityName"], style: TextStyle(fontSize: 30),),
+                  Text(snapshot.data!["comment"], style: TextStyle(fontSize: 30),),
+                  RoundedButton(
+                    buttonColor: Colors.blueAccent,
+                    buttonTitle: "プロフィール修正！",
+                    onPressed: () =>
+                    {Navigator.pushNamed(context, EditUserDetailsScreen.id)},
+                  ),
+                ],
+              ));
             } else if (snapshot.hasError) {
               return Text('エラーだよ！');
             }else{
@@ -56,13 +71,24 @@ class _UserDetailsState extends State<UserDetails> {
       ),
     );
   }
-  Future<QuerySnapshot> getUserData() async {
-    String currentUid = FirebaseAuth.instance.currentUser!.uid;
+  Future<DocumentSnapshot> getUserData() async {
+    var currentUserEmail = loggedInUser!.email;
     // print("今のユーザーIDは、$currentUid です");
     var querySnapshot = await FirebaseFirestore.instance
         .collection("userDetails")
-        .where('uid', isEqualTo: currentUid)
+        .doc(currentUserEmail)
         .get();
     return querySnapshot; //QuerySnapshot(条件に一致したdocumentsの集まり)
   }
+
+  //id指定ではなくwhereで取り出す場合
+  // Future<QuerySnapshot> getUserData() async {
+  //   String currentUid = FirebaseAuth.instance.currentUser!.uid;
+  //   // print("今のユーザーIDは、$currentUid です");
+  //   var querySnapshot = await FirebaseFirestore.instance
+  //       .collection("userDetails")
+  //       .where('uid', isEqualTo: currentUid)
+  //       .get();
+  //   return querySnapshot; //QuerySnapshot(条件に一致したdocumentsの集まり)
+  // }
 }

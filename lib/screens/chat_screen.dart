@@ -3,6 +3,7 @@ import 'package:template_app/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:template_app/screens/users_control/user_details.dart';
+import 'package:template_app/screens/welcome_screen.dart';
 
 
 final _firestore =
@@ -42,8 +43,9 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(onPressed: () { Navigator.pushNamed(context, WelcomeScreen.id); }, icon: Icon(Icons.home),),
         centerTitle: true,
-        leading: null,
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.account_circle),

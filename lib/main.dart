@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:template_app/screens/Designs/designs_screen.dart';
 import 'package:template_app/screens/users_control/add_user_details_screen.dart';
+import 'package:template_app/screens/users_control/edit_user_details.dart';
 import 'package:template_app/screens/users_control/user_details.dart';
 import 'package:template_app/screens/welcome_screen.dart';
 import 'package:template_app/screens/users_control/login_screen.dart';
@@ -37,6 +38,7 @@ class FlashChat extends StatelessWidget {
           DesignsScreen.id: (context) => DesignsScreen(),
           AddUserDetailsScreen.id : (context) => AddUserDetailsScreen(),
           UserDetails.id : (context) => UserDetails(),
+          EditUserDetailsScreen.id : (context) => EditUserDetailsScreen(),
           // UserDetailsInDesignScreen.id : (context) => UserDetailsInDesignScreen(),
         },
         // home: WelcomeScreen(), //you cannot use home property when you have initialRoute property
