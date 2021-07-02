@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:template_app/screens/Designs/designs_screen.dart';
-import 'package:template_app/screens/Designs/user_details_in_design_screen.dart';
-import 'package:template_app/screens/add_user_details_screen.dart';
-import 'package:template_app/screens/user_details.dart';
+import 'package:template_app/screens/users_control/add_user_details_screen.dart';
+import 'package:template_app/screens/users_control/user_details.dart';
 import 'package:template_app/screens/welcome_screen.dart';
-import 'package:template_app/screens/login_screen.dart';
-import 'package:template_app/screens/registration_screen.dart';
+import 'package:template_app/screens/users_control/login_screen.dart';
+import 'package:template_app/screens/users_control/registration_screen.dart';
 import 'package:template_app/screens/chat_screen.dart';
 import 'package:template_app/screens/ToDoApp/tasks_screen.dart';
-import 'package:template_app/screens/add_user_details_screen.dart';
 
 void main() => runApp(FlashChat());
 

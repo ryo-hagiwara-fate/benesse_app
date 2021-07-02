@@ -1,4 +1,4 @@
-import 'package:template_app/screens/registration_screen.dart';
+import 'package:template_app/screens/users_control/registration_screen.dart';
 import 'package:flutter/material.dart';
 
 class RoundedButton extends StatelessWidget {
@@ -9,7 +9,6 @@ class RoundedButton extends StatelessWidget {
   final Color buttonColor;
   final String buttonTitle;
   final onPressed;
-  // final class onpress
 
   @override
   Widget build(BuildContext context) {

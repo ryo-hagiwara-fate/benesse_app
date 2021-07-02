@@ -1,9 +1,9 @@
-// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:template_app/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:template_app/screens/add_user_details_screen.dart';
+import 'package:template_app/screens/users_control/user_details.dart';
+
 
 final _firestore =
     FirebaseFirestore.instance; //MessageStreamをRefactorするために外に出した
@@ -32,20 +32,6 @@ class _ChatScreenState extends State<ChatScreen> {
       print(e);
     }
   }
-
-  // void getMessage() async {
-  //   final messages = await _firestore.collection("messages").get();
-  //   for (var message in messages.docs) {
-  //     print(message.data());
-  //   }
-  // }
-  // void messagesStream() async { //snapshotsによってStreamが使える。
-  //   await for (var snapshot in _firestore.collection("messages").snapshots()){ //サブスクライブしているfirebaseに変更があったらsnapshotが受信され自動で再読み込みされる
-  //     for (var message in snapshot.docs) {
-  //       print(message.data());
-  //     }
-  //   }
-  // }
   @override
   void initState() {
     super.initState();
@@ -60,9 +46,9 @@ class _ChatScreenState extends State<ChatScreen> {
         leading: null,
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.close),
+              icon: Icon(Icons.account_circle),
               onPressed: () {
-                Navigator.pushNamed(context, AddUserDetailsScreen.id);
+                Navigator.pushNamed(context, UserDetails.id);
                 // _auth.signOut();
                 // Navigator.pop(context);
               }),

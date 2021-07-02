@@ -4,7 +4,7 @@ import 'package:template_app/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'chat_screen.dart';
+import 'add_user_details_screen.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart'; // ぐるぐるロードを表示させるためのもの
 
 class RegistrationScreen extends StatefulWidget {
@@ -110,7 +110,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         await _auth.createUserWithEmailAndPassword(
                             email: email, password: password);
                     if (newUser != null) {
-                      Navigator.pushNamed(context, ChatScreen.id);
+                      // Navigator.pushNamed(context, ChatScreen.id);
+                      Navigator.pushNamed(context, AddUserDetailsScreen.id);
                     }
                     // setState(() {
                     //   showSpinner = false;
