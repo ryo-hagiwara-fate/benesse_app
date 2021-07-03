@@ -60,6 +60,7 @@ class _AddUserDetailsScreenState extends State<AddUserDetailsScreen> {
               onChanged: (value){
                 comment = value;
               },
+
             ),
             RoundedButton(buttonColor: Colors.red, buttonTitle: "登録！！", onPressed: (){
               print("$userName : $universityName : $comment : ${loggedInUser!.uid}");
