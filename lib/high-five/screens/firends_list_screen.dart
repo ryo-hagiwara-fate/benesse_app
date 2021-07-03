@@ -35,6 +35,7 @@ class FriendsListScreen extends StatelessWidget {
   }
 }
 
+
 class User {
   String userName, duration, image, subject, textbook;
   User(this.userName, this.duration, this.image, this.subject, this. textbook);
