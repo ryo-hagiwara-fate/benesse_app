@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:template_app/high-five/screens/home_screen.dart';
+import 'package:template_app/high-five/screens/question_post_screen.dart';
+import 'package:template_app/high-five/screens/study_post_screen.dart';
+import 'package:template_app/high-five/screens/study_thread_screen.dart';
 import 'package:template_app/high-five/userControl/add_user_details_screen.dart';
 import 'package:template_app/high-five/userControl/login_screen.dart';
 import 'package:template_app/high-five/userControl/registration_screen.dart';
@@ -46,6 +49,9 @@ class FlashChat extends StatelessWidget {
           RegistrationScreen.id : (context) => RegistrationScreen(),
           UserDetails.id : (context) => UserDetails(),
           AddUserDetailsScreen.id : (context) => AddUserDetailsScreen(),
+          StudyPostScreen.id : (context) => StudyPostScreen(),
+          StudyThreadScreen.id : (context) => StudyThreadScreen(),
+          QuestionPostScreen.id : (context) => QuestionPostScreen(),
 
 
           // LoginScreen.id: (context) => LoginScreen(),
