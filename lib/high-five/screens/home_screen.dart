@@ -3,7 +3,9 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:template_app/high-five/screens/dummy_screen1.dart';
 import 'package:template_app/high-five/screens/firends_list_screen.dart';
 import 'package:template_app/high-five/screens/question_post_screen.dart';
+import 'package:template_app/high-five/screens/question_thread_screen.dart';
 import 'package:template_app/high-five/screens/study_post_screen.dart';
+import 'package:template_app/high-five/screens/study_thread_screen.dart';
 import 'package:template_app/high-five/screens/your_info_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,14 +15,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   int _currentIndex = 0;
   final _pageWidgets = [
     YourInfoScreen(),
     FriendsListScreen(),
-    QuestionPostScreen(),
+    QuestionThreadScreen(),
     StudyPostScreen(),
-    DummyScreen1()
+    StudyThreadScreen()
   ];
 
   @override
