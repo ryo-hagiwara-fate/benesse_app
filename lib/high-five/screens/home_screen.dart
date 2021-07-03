@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:template_app/high-five/screens/firends_list_screen.dart';
+import 'package:template_app/high-five/screens/question_post_screen.dart';
+import 'package:template_app/high-five/screens/study_post_screen.dart';
 import 'package:template_app/high-five/screens/your_info_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,10 +17,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final _pageWidgets = [
     YourInfoScreen(),
     FriendsListScreen(),
-    // SecondDesign(),
-    // ThirdDesign(),
-    // FourthDesign(),
-    // FifthDesign()
+    QuestionPostScreen(),
+    StudyPostScreen(),
   ];
 
   @override
@@ -35,8 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
         items: [
           BottomNavyBarItem(icon: Icon(Icons.home), title: Text("GridView", style: TextStyle(fontSize: 18),), activeColor: Colors.lightBlueAccent, textAlign: TextAlign.center),
           BottomNavyBarItem(icon: Icon(Icons.cake), title: Text("ListView", style: TextStyle(fontSize: 18),), activeColor: Colors.deepPurple, textAlign: TextAlign.center),
-          // BottomNavyBarItem(icon: Icon(Icons.catching_pokemon), title: Text("PieChart1", style: TextStyle(fontSize: 18),), activeColor: Colors.deepOrange, textAlign: TextAlign.center),
-          // BottomNavyBarItem(icon: Icon(Icons.local_drink), title: Text("fl_charts", style: TextStyle(fontSize: 18),), activeColor: Colors.blueGrey, textAlign: TextAlign.center),
+          BottomNavyBarItem(icon: Icon(Icons.catching_pokemon), title: Text("PieChart1", style: TextStyle(fontSize: 18),), activeColor: Colors.deepOrange, textAlign: TextAlign.center),
+          BottomNavyBarItem(icon: Icon(Icons.local_drink), title: Text("fl_charts", style: TextStyle(fontSize: 18),), activeColor: Colors.blueGrey, textAlign: TextAlign.center),
           // BottomNavyBarItem(icon: Icon(Icons.handyman), title: Text("First", style: TextStyle(fontSize: 18),), activeColor: Colors.brown, textAlign: TextAlign.center),
         ],
         selectedIndex: _currentIndex,
