@@ -112,7 +112,7 @@ class _YourInfoScreenState extends State<YourInfoScreen> {
                                   width: 3.0,
                                 ),
                                 image: DecorationImage(
-                                    image: ExactAssetImage("images/masuo.png"), //ユーザーアバター
+                                    image: ExactAssetImage("images/user_3.png"), //ユーザーアバター
                                     fit: BoxFit.contain
                                 )
                             ),
