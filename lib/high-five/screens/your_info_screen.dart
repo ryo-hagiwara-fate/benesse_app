@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import '../userControl/add_user_details_screen.dart';
 // import 'package:template_app/components/rounded_button.dart';
 // import 'package:template_app/high-five/userControl/edit_user_details.dart';
+import '../userControl/edit_user_details.dart';
+
 
 import 'home_screen.dart';
 
@@ -97,7 +99,13 @@ class _YourInfoScreenState extends State<YourInfoScreen> {
                                     onPressed: (){
                                       Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context)=> AddUserDetailsScreen())
+                                          MaterialPageRoute(builder: (context)=> EAddUserDetailsScreen(
+                                              snapshot.data!["userName"],
+                                              snapshot.data!["universityName"],
+                                              snapshot.data!["sex"],
+                                              snapshot.data!["hobby"],
+                                              snapshot.data!["circle"]
+                                          ))
                                       );
                                     },
                                     icon: Icon(Icons.edit)

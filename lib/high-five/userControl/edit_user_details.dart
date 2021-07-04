@@ -82,6 +82,7 @@ class _EAddUserDetailsScreenState extends State<EAddUserDetailsScreen> {
             children: <Widget>[
               Expanded(
                 child: TextField(
+                  controller: TextEditingController(text: userName),
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
                     hintText: "お名前",
@@ -93,18 +94,19 @@ class _EAddUserDetailsScreenState extends State<EAddUserDetailsScreen> {
               ),
               Expanded(
                 child: TextField(
+                  controller: TextEditingController(text: universityName),
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
                     hintText: "志望大学",
                   ),
                   onChanged: (value){
-                    value = universityName;
                     universityName = value;
                   },
                 ),
               ),
               Expanded(
                 child: TextField(
+                  controller: TextEditingController(text: sex),
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
                     hintText: "性別",
@@ -116,6 +118,7 @@ class _EAddUserDetailsScreenState extends State<EAddUserDetailsScreen> {
               ),
               Expanded(
                 child: TextField(
+                  controller: TextEditingController(text: hobby),
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
                     hintText: "趣味",
@@ -127,6 +130,7 @@ class _EAddUserDetailsScreenState extends State<EAddUserDetailsScreen> {
               ),
               Expanded(
                 child: TextField(
+                  controller: TextEditingController(text: circle),
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
                     hintText: "入りたいサークル",
@@ -137,7 +141,7 @@ class _EAddUserDetailsScreenState extends State<EAddUserDetailsScreen> {
                 ),
               ),
               Expanded(
-                child: RoundedButton(buttonColor: Colors.red, buttonTitle: "登録！！", onPressed: (){
+                child: RoundedButton(buttonColor: Colors.red, buttonTitle: "編集！！", onPressed: (){
                   _firestore.collection("userDetails").doc(loggedInUser!.email).set({
                     // "uid": loggedInUser!.uid,
                     "userName": userName,
@@ -215,7 +219,7 @@ class _EditUserDetailsScreenState extends State<EditUserDetailsScreen> {
                 comment = value;
               },
             ),
-            RoundedButton(buttonColor: Colors.red, buttonTitle: "登録！！", onPressed: (){
+            RoundedButton(buttonColor: Colors.red, buttonTitle: "編集！！", onPressed: (){
               print("$userName : $universityName : $comment : ${loggedInUser!.uid}");
               _firestore.collection("userDetails").doc(loggedInUser!.email).update({
                 // "uid": loggedInUser!.uid,
