@@ -5,6 +5,7 @@ import 'message_screen.dart';
 import 'your_info_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:flappy_search_bar/flappy_search_bar.dart';
 
 class SearchFriendsScreen extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class SearchFriendsScreen extends StatefulWidget {
 class _SearchFriendsScreen extends State<SearchFriendsScreen> {
 
   final _auth = FirebaseAuth.instance;
+  String searchText = "";
   var loggedInUser;
 
   void getCurrentUser() async{
@@ -35,9 +37,24 @@ class _SearchFriendsScreen extends State<SearchFriendsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          automaticallyImplyLeading: false,
           backgroundColor: Colors.lightBlueAccent,
-          title: Text("チャット一覧")
+          title: TextField(
+            onChanged: (value) {
+              searchText = value;
+            },
+            decoration: InputDecoration(
+              hintText: "検索キーワードを入力",
+              border: InputBorder.none,
+            ),
+          ),
+          actions: [
+            IconButton(
+                onPressed: (){
+                  print(searchText);
+                },
+                icon: Icon(Icons.search)
+            )
+          ],
       ),
       body: Column(
         children: [
@@ -58,10 +75,6 @@ class _SearchFriendsScreen extends State<SearchFriendsScreen> {
           )
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){},
-        child: Icon(Icons.person_add_alt),
-      ),
     );
   }
 }
@@ -74,72 +87,58 @@ class ChatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: press,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: kDefaultPadding,vertical: kDefaultPadding*0.75),
-        child: Row(
-          children: [
-            Stack(
-              children: [
-                CircleAvatar(
-                  radius:24,
-                  backgroundImage: AssetImage(chat.image),
-                ),
-                if(chat.isActive) Positioned(
-                  right: 0,
-                  bottom: 0,
-                  child: Container(
-                    height: 16,
-                    width: 16,
-                    decoration: BoxDecoration(
-                        color:Colors.pink,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            width: 3
-                        )
-                    ),
-                  ),
-                )
-              ],
-            ),
-            Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        chat.name,
-                        style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Opacity(
-                        opacity: 0.5,
-                        child: Text(
-                          chat.lastMessage,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: kDefaultPadding,vertical: kDefaultPadding*0.75),
+      child: Row(
+        children: [
+          Stack(
+            children: [
+              CircleAvatar(
+                radius:24,
+                backgroundImage: AssetImage(chat.image),
+              ),
+              if(chat.isActive) Positioned(
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  height: 16,
+                  width: 16,
+                  decoration: BoxDecoration(
+                      color:Colors.pink,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          width: 3
                       )
-                    ],
                   ),
-                )
-            ),
-            InkWell(
-                onTap: (){
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context)=> YourInfoScreen())
-                  );
-                },
-                child: Icon(Icons.add)
-            )
-          ],
-        ),
+                ),
+              )
+            ],
+          ),
+          Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      chat.name,
+                      style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+              )
+          ),
+          InkWell(
+              onTap: (){
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(builder: (context)=> YourInfoScreen())
+                // );
+              },
+              child: Icon(Icons.add)
+          )
+        ],
       ),
     );
   }

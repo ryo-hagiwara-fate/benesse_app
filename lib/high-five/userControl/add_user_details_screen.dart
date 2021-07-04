@@ -38,42 +38,103 @@ class _AddUserDetailsScreenState extends State<AddUserDetailsScreen> {
     String userName = "";
     String universityName = "";
     String comment = "";
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text("ニックネーム"),
-            TextField(
-              onChanged: (value){
-                userName = value;
-              },
-            ),
-            Text("志望大学"),
-            TextField(
-              onChanged: (value){
-                universityName = value;
-              },
-            ),
-            Text("ひとこと！"),
-            TextField(
-              onChanged: (value){
-                comment = value;
-              },
+    late String sex;
+    late String hobby;
+    late String circle;
 
+    return Scaffold(
+      appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.lightBlueAccent,
+          title: Center(
+            child: Text(
+              "Setting",
+              style: TextStyle(
+                  fontFamily: "Pacifico",
+                  fontSize: 40.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold
+              ),
             ),
-            RoundedButton(buttonColor: Colors.red, buttonTitle: "登録！！", onPressed: (){
-              print("$userName : $universityName : $comment : ${loggedInUser!.uid}");
-              _firestore.collection("userDetails").doc(loggedInUser!.email).set({
-                // "uid": loggedInUser!.uid,
-                "userName": userName,
-                "universityName": universityName,
-                "comment" : comment,
-              });
-              // Navigator.pushNamed(context, UserDetails.id);
-              Navigator.pushNamed(context, HomeScreen.id);
-            })
-          ],
+          )
+      ),
+      body: SafeArea(
+        child: Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: TextField(
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    hintText: "お名前",
+                  ),
+                  onChanged: (value){
+                    userName = value;
+                  },
+                ),
+              ),
+              Expanded(
+                child: TextField(
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    hintText: "志望大学",
+                  ),
+                  onChanged: (value){
+                    universityName = value;
+                  },
+                ),
+              ),
+              Expanded(
+                child: TextField(
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    hintText: "性別",
+                  ),
+                  onChanged: (value){
+                    sex = value;
+                  },
+                ),
+              ),
+              Expanded(
+                child: TextField(
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    hintText: "趣味",
+                  ),
+                  onChanged: (value){
+                    hobby = value;
+                  },
+                ),
+              ),
+              Expanded(
+                child: TextField(
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    hintText: "入りたいサークル",
+                  ),
+                  onChanged: (value){
+                    circle = value;
+                  },
+                ),
+              ),
+              Expanded(
+                child: RoundedButton(buttonColor: Colors.red, buttonTitle: "登録！！", onPressed: (){
+                  print("$userName : $universityName : $comment : ${loggedInUser!.uid}");
+                  _firestore.collection("userDetails").doc(loggedInUser!.email).set({
+                    // "uid": loggedInUser!.uid,
+                    "userName": userName,
+                    "universityName": universityName,
+                    "sex": sex,
+                    "hobby": hobby,
+                    "circle": circle
+                  });
+                  // Navigator.pushNamed(context, UserDetails.id);
+                  Navigator.pushNamed(context, HomeScreen.id);
+                }),
+              )
+            ],
+          ),
         ),
       ),
     );
