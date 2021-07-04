@@ -43,46 +43,71 @@ class _QuestionPostScreenState extends State<QuestionPostScreen> {
     String questionText = "";
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(),
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text("科目"),
-            TextField(
-              onChanged: (value){
-                subject = value;
-              },
-            ),
-            Text("単元"),
-            TextField(
-              onChanged: (value){
-                unitName = value;
-              },
-            ),
-            Text("質問内容"),
-            TextField(
-              maxLines: 8,
-              onChanged: (value){
-                questionText = value;
-              },
-            ),
-            RoundedButton(buttonColor: Colors.red, buttonTitle: "質問！！", onPressed: (){
-              // print("$userName : $universityName : $questionText : ${loggedInUser!.uid}");
-              _firestore.collection("test-questionPosts").add({
-                // "uid": loggedInUser!.uid,
-                "subject": subject,
-                "unitName": unitName,
-                "questionText" : questionText,
-                "email": loggedInUser!.email,
-                "likes": 0,
-                "time": DateTime.now(),
-              });
-              // Navigator.pushNamed(context, UserDetails.id);
-              Navigator.pushNamed(context, HomeScreen.id);
-            })
-          ],
+        child: FutureBuilder<DocumentSnapshot>(
+          future: getUserData(),
+          builder: (BuildContext context, snapshot) {
+            if (snapshot.hasData) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text("科目"),
+                  TextField(
+                    onChanged: (value) {
+                      subject = value;
+                    },
+                  ),
+                  Text("単元"),
+                  TextField(
+                    onChanged: (value) {
+                      unitName = value;
+                    },
+                  ),
+                  Text("質問内容"),
+                  TextField(
+                    maxLines: 3,
+                    onChanged: (value) {
+                      questionText = value;
+                    },
+                  ),
+                  RoundedButton(
+                      buttonColor: Colors.red, buttonTitle: "質問！！", onPressed: () {
+                    // print("${loggedInUser!.uid}");
+                    _firestore.collection("test-questionPosts").add({
+                      // "uid": loggedInUser!.uid,
+                      "subject": subject,
+                      "unitName": unitName,
+                      "questionText": questionText,
+                      "email": loggedInUser!.email,
+                      "likes": 0,
+                      "time": DateTime.now(),
+                      "userName": snapshot.data!["userName"],
+                    });
+                    // Navigator.pushNamed(context, UserDetails.id);
+                    Navigator.pop(context);
+                  })
+                ],
+              );
+            } else if (snapshot.hasError) {
+            return Text('エラーだよ！');
+            }else{
+            return Center(child: CircularProgressIndicator());
+            }
+          },
         ),
       ),
     );
+  }
+  Future<DocumentSnapshot> getUserData() async {
+    var currentUserEmail = loggedInUser!.email;
+    // print("今のユーザーIDは、$currentUid です");
+    var querySnapshot = await FirebaseFirestore.instance
+        .collection("userDetails")
+        .doc(currentUserEmail)
+        .get();
+    print(querySnapshot);
+    return querySnapshot; //QuerySnapshot(条件に一致したdocumentsの集まり)
   }
 }

@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:like_button/like_button.dart';
+import 'package:template_app/high-five/screens/question_details_screen.dart';
 import 'package:template_app/high-five/screens/question_post_screen.dart';
 import 'package:template_app/high-five/screens/study_post_screen.dart';
 
@@ -78,7 +80,9 @@ class StudyThread extends StatelessWidget {
                 questionText: studyData.get('questionText'),
                 isMe: currentUser == studyData.get('email'),
                 likes: studyData.get('likes'),
-                documentId: studyData.id
+                documentId: studyData.id,
+                userName: studyData.get('userName'),
+                // userName: studyData.get(''),
             ); //この方がきれい
             postCards.add(postCard);
           }
@@ -101,63 +105,120 @@ class StudyThread extends StatelessWidget {
 
 class PostCard extends StatelessWidget {
   const PostCard(
-      {Key? key, required this.sender, required this.subject, required this.isMe, required this.unitName, required this.likes, required this.documentId, required this.questionText})
+      {Key? key, required this.sender, required this.subject, required this.isMe, required this.unitName, required this.likes, required this.documentId, required this.questionText, required this.userName})
       : super(key: key);
-  final String sender, subject, unitName, documentId, questionText;
+  final String sender, subject, unitName, documentId, questionText, userName;
   final int likes;
   final bool isMe;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Row(
-        children: <Widget>[
-          CircleAvatar(
-            radius: 50,
-            backgroundColor: Colors.red,
-            backgroundImage: AssetImage("images/masuo.png"),
-          ),
-          Column(
-            children: <Widget>[
-              Text(subject),
-              Text(unitName),
-              Text(questionText),
-              LikeButton(
-                // onTap: onLikeButtonTapped,
-                size: 30,
-                circleColor:
-                CircleColor(start: Colors.redAccent, end: Colors.red),
-                bubblesColor: BubblesColor(
-                  dotPrimaryColor: Colors.redAccent,
-                  dotSecondaryColor: Colors.red,
+    var screen = MediaQuery.of(context).size;
+    return GestureDetector(
+      onTap: (){ Navigator.push(context,
+          MaterialPageRoute(builder: (context)=>QuestionDetailsScreen(userName: userName, subject: subject, unitName: unitName, questionText: questionText, likes: likes))); },
+      child: Card(
+        color: Color(0xffCDFFCE),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Column(
+              children: [
+                Container(
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(40.0)),
+                      border: Border.all(
+                        color: Colors.black, // ５パターンの色で回す
+                        width: 1,
+                      ),
+                      image: DecorationImage(
+                          image: ExactAssetImage("images/masuo.png"),
+                          fit: BoxFit.contain
+                      )
+                  ),
                 ),
-                likeBuilder: (bool isLiked) {
-                  return Icon(
-                    Icons.favorite,
-                    color: isLiked ? Colors.redAccent : Colors.grey,
-                    size: 25,
-                  );
-                },
-                likeCount: likes,
-                countBuilder: (int? count, bool isLiked, String text) {
-                  var color = isLiked ? Colors.redAccent : Colors.grey;
-                  Widget result;
-                  if (count == 0) {
-                    result = Text(
-                      "love",
-                      style: TextStyle(color: color),
-                    );
-                  } else
-                    result = Text(
-                      text,
-                      style: TextStyle(color: color),
-                    );
-                  return result;
-                },
-              ),
-            ],
-          ),
-        ],
+                Container(
+                    child: Center(child: Text(userName)),
+                  width: 70,
+                ),
+              ],
+            ),
+            SizedBox(width: 5,),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Container(
+                  width: screen.width*0.68,
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        // crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 5),
+                            child: Text(subject, style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),),
+                            decoration: BoxDecoration(
+                              color: Color(0xff69DBFF),
+                              borderRadius: BorderRadius.all( Radius.circular(8.0)),
+                          ),),
+                          SizedBox(width: 10,),
+                          Text(unitName, style: TextStyle(fontSize: 18),),
+                        ],
+                      ),
+                      Divider(color: Colors.grey, thickness: 1,),
+                      Text(questionText),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: 60,
+                  // color: Colors.red,
+                  alignment: Alignment.topLeft,
+                  child: LikeButton(
+                    // onTap: onLikeButtonTapped,
+                    size: 30,
+                    circleColor:
+                    CircleColor(start: Colors.redAccent, end: Colors.red),
+                    bubblesColor: BubblesColor(
+                      dotPrimaryColor: Colors.redAccent,
+                      dotSecondaryColor: Colors.red,
+                    ),
+                    likeBuilder: (bool isLiked) {
+                      return Icon(
+                        Icons.favorite,
+                        color: isLiked ? Colors.redAccent : Colors.grey,
+                        size: 25,
+                      );
+                    },
+                    likeCount: likes,
+                    countBuilder: (int? count, bool isLiked, String text) {
+                      var color = isLiked ? Colors.redAccent : Colors.grey;
+                      Widget result;
+                      if (count == 0) {
+                        result = Text(
+                          "love",
+                          style: TextStyle(color: color),
+                        );
+                      } else
+                        result = Text(
+                          text,
+                          style: TextStyle(color: color),
+                        );
+                      return result;
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
     // return Padding(
