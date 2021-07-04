@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../userControl/add_user_details_screen.dart';
 // import 'package:template_app/components/rounded_button.dart';
 // import 'package:template_app/high-five/userControl/edit_user_details.dart';
 
@@ -86,10 +87,21 @@ class _YourInfoScreenState extends State<YourInfoScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: <Widget>[
                                       UserStatusDesign(snapshot.data!["universityName"], "志望大学"),
-                                      UserStatusDesign(snapshot.data!["comment"], "ひとこと！"),
+                                      UserStatusDesign(snapshot.data!["sex"], "性別"),
+                                      UserStatusDesign(snapshot.data!["hobby"], "趣味"),
+                                      UserStatusDesign(snapshot.data!["circle"], "入りたいサークル"),
                                     ],
                                   ),
                                 ),
+                                IconButton(
+                                    onPressed: (){
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context)=> AddUserDetailsScreen())
+                                      );
+                                    },
+                                    icon: Icon(Icons.edit)
+                                )
                               ],
                             ),
                           ),

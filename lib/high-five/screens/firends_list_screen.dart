@@ -6,6 +6,7 @@ import 'your_info_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'search_friends_screen.dart';
+import 'friend_info_screen.dart';
 
 class FriendsListScreen extends StatefulWidget {
   @override
@@ -38,7 +39,17 @@ class _FriendsListScreenState extends State<FriendsListScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.lightBlueAccent,
-        title: Text("チャット一覧")
+        title: Center(
+          child: Text(
+              "Friends List",
+              style: TextStyle(
+                  fontFamily: "Pacifico",
+                  fontSize: 40.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold
+              ),
+          ),
+        )
       ),
       body: Column(
         children: [
@@ -140,7 +151,7 @@ class ChatCard extends StatelessWidget {
                  onTap: (){
                    Navigator.push(
                        context,
-                       MaterialPageRoute(builder: (context)=> YourInfoScreen())
+                       MaterialPageRoute(builder: (context)=> FriendInfoScreen())
                    );
                  },
                 child: Icon(Icons.account_box_outlined)

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../models/ChatMessage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 //FIXME constants.dartへ
 const kPrimaryColor = Color(0xFF00BF6D);
@@ -42,11 +44,54 @@ class MessageScreen extends StatelessWidget {
 
 //FIXME ファイル分ける
 class MessageBody extends StatefulWidget {
+
   @override
   _MessageBodyState createState() => _MessageBodyState();
 }
 
 class _MessageBodyState extends State<MessageBody> {
+
+  @override
+  void initState() {
+    super.initState();
+    getMessages();
+    getCurrentUser();
+    messagesStream();
+  }
+
+  late String messageText;
+  late String sender;
+  final _auth = FirebaseAuth.instance;
+  final _firestore = FirebaseFirestore.instance;
+  late User? loggedInUser;
+  var _controller = TextEditingController();
+  // final _firestore = .instance;
+
+  void getCurrentUser() async{
+    try {
+      final user = await _auth.currentUser;
+      loggedInUser = user;
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void getMessages() async {
+    final messages = await _firestore.collection("messages").get();
+    for (var message in messages.docs){
+      print(message.data());
+    }
+  }
+
+  void messagesStream() async {
+    await for (var snapshot in _firestore.collection("messages").snapshots()) {
+      for(var message in snapshot.docs){
+        print(message.data());
+      }
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -82,14 +127,44 @@ class _MessageBodyState extends State<MessageBody> {
                         width: 10,
                       ),
                       Expanded(child: TextField(
+                        controller: _controller,
+                        onChanged: (value) {
+                          messageText = value;
+                        },
                         decoration: InputDecoration(
                             hintText: "メッセージを入力",
-                            border: InputBorder.none
+                            border: InputBorder.none,
+                            suffixIcon: IconButton(
+                              icon: Icon(Icons.send),
+                              onPressed: ()
+                              async{
+                                try{
+                                  await _firestore.collection("messages").add(
+                                      {
+                                        "text":messageText,
+                                        "sender": loggedInUser?.email
+                                      }
+                                  );
+
+                                  setState(() {
+                                    demeChatMessages.add(ChatMessage(
+                                      text: messageText,
+                                      messageType: ChatMessageType.text,
+                                      messageStatus: MessageStatus.viewed,
+                                      isSender: true,
+                                    ));
+                                  });
+                                }catch(e){
+                                  print(e);
+                                }
+                                setState(() {
+                                  messageText = "";
+                                  _controller.clear();
+                                });
+                              },
+                            )
                         ),
                       )),
-                      FlatButton(
-                          onPressed: (){},
-                          child: Icon(Icons.send))
                     ],
                   )
                 )
@@ -123,7 +198,7 @@ class Message extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30)
             ),
             child: Text(
-                "Chat Text",
+                message.text,
                 style: TextStyle(color: Colors.white),
             )
         )
