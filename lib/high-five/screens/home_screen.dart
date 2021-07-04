@@ -31,8 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
         items: [
           BottomNavyBarItem(icon: Icon(Icons.home), title: Text("GridView", style: TextStyle(fontSize: 18),), activeColor: Colors.lightBlueAccent, textAlign: TextAlign.center),
           BottomNavyBarItem(icon: Icon(Icons.chat_outlined), title: Text("Chat", style: TextStyle(fontSize: 18),), activeColor: Colors.deepPurple, textAlign: TextAlign.center),
-          BottomNavyBarItem(icon: Icon(Icons.catching_pokemon), title: Text("PieChart1", style: TextStyle(fontSize: 18),), activeColor: Colors.deepOrange, textAlign: TextAlign.center),
-          BottomNavyBarItem(icon: Icon(Icons.local_drink), title: Text("fl_charts", style: TextStyle(fontSize: 18),), activeColor: Colors.blueGrey, textAlign: TextAlign.center),
+          BottomNavyBarItem(icon: Icon(Icons.help), title: Text("質問スレ", style: TextStyle(fontSize: 18),), activeColor: Colors.deepOrange, textAlign: TextAlign.center),
+          BottomNavyBarItem(icon: Icon(Icons.auto_stories), title: Text("学習記録", style: TextStyle(fontSize: 18),), activeColor: Colors.blueGrey, textAlign: TextAlign.center),
         ],
         selectedIndex: _currentIndex,
         onItemSelected: (index) => setState(() => _currentIndex = index),

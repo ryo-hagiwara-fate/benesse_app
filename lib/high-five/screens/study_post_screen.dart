@@ -43,97 +43,121 @@ class _StudyPostScreenState extends State<StudyPostScreen> {
     String comment = "";
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(),
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text("勉強した教科"),
-            TextField(
-              onChanged: (value){
-                subject = value;
-              },
-            ),
-            Text("教材"),
-            TextField(
-              onChanged: (value){
-                textbook = value;
-              },
-            ),
-            // https://stackoverflow.com/questions/57754745/how-to-keep-cupertinodatepicker-at-the-bottom-of-the-screen-instead-of-the-whole
-            ListTile(
-              title: Text('時間入力！'),
-              // title: Text('$durationHour : $durationMinute'),
-              onTap: () {
-                // showCupertinoModalPopup<void>(
-                //   context: context,
-                //   builder: (BuildContext context) {
-                //     return _buildBottomPicker(
-                //       CupertinoTimerPicker(
-                //           mode: CupertinoTimerPickerMode.hm,
-                //           onTimerDurationChanged: (duration){
-                //             print("${duration.inHours.remainder(60)} : ${duration.inMinutes.remainder(60)}");
-                //             // durationHour = duration.inHours.remainder(60);
-                //             // durationMinute = duration.inMinutes.remainder(60);
-                //             setState(() {
-                //               durationHour = duration.inHours.remainder(60);
-                //               durationMinute = duration.inMinutes.remainder(60);
-                //             });
-                //       }),
-                //     );
-                //   },
-                // );
-                showPickerNumber(context);
-              },
-            ),
-            Text("コメント！"),
-            TextField(
-              onChanged: (value){
-                comment = value;
-              },
-            ),
-            RoundedButton(buttonColor: Colors.red, buttonTitle: "登録！！", onPressed: (){
-              // print("$userName : $universityName : $comment : ${loggedInUser!.uid}");
-              _firestore.collection("test-studyPosts").add({
-                // "uid": loggedInUser!.uid,
-                "subject": subject,
-                "textbook": textbook,
-                "durationHour": durationHour,
-                "durationMinute": durationMinute,
-                "comment" : comment,
-                "email": loggedInUser!.email,
-                "likes": 0,
-                "time": DateTime.now(),
-              });
-              // Navigator.pushNamed(context, UserDetails.id);
-              Navigator.pushNamed(context, HomeScreen.id);
-            })
-          ],
+        child: FutureBuilder<DocumentSnapshot>(
+          future: getUserData(),
+          builder: (BuildContext context, snapshot) {
+            if(snapshot.hasData){
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text("勉強した教科"),
+                  TextField(
+                    onChanged: (value){
+                      subject = value;
+                    },
+                  ),
+                  Text("教材"),
+                  TextField(
+                    onChanged: (value){
+                      textbook = value;
+                    },
+                  ),
+                  // https://stackoverflow.com/questions/57754745/how-to-keep-cupertinodatepicker-at-the-bottom-of-the-screen-instead-of-the-whole
+                  ListTile(
+                    title: Text('時間入力！'),
+                    // title: Text('$durationHour : $durationMinute'),
+                    onTap: () {
+                      // showCupertinoModalPopup<void>(
+                      //   context: context,
+                      //   builder: (BuildContext context) {
+                      //     return _buildBottomPicker(
+                      //       CupertinoTimerPicker(
+                      //           mode: CupertinoTimerPickerMode.hm,
+                      //           onTimerDurationChanged: (duration){
+                      //             print("${duration.inHours.remainder(60)} : ${duration.inMinutes.remainder(60)}");
+                      //             // durationHour = duration.inHours.remainder(60);
+                      //             // durationMinute = duration.inMinutes.remainder(60);
+                      //             setState(() {
+                      //               durationHour = duration.inHours.remainder(60);
+                      //               durationMinute = duration.inMinutes.remainder(60);
+                      //             });
+                      //       }),
+                      //     );
+                      //   },
+                      // );
+                      showPickerNumber(context);
+                    },
+                  ),
+                  Text("コメント！"),
+                  TextField(
+                    onChanged: (value){
+                      comment = value;
+                    },
+                  ),
+                  RoundedButton(buttonColor: Colors.red, buttonTitle: "登録！！", onPressed: (){
+                    // print("$userName : $universityName : $comment : ${loggedInUser!.uid}");
+                    _firestore.collection("test-studyPosts").add({
+                      // "uid": loggedInUser!.uid,
+                      "subject": subject,
+                      "textbook": textbook,
+                      "durationHour": durationHour,
+                      "durationMinute": durationMinute,
+                      "comment" : comment,
+                      "email": loggedInUser!.email,
+                      "likes": 0,
+                      "time": DateTime.now(),
+                      "userName": snapshot.data!["userName"],
+                    });
+                    // Navigator.pushNamed(context, UserDetails.id);
+                    Navigator.pop(context);
+                  })
+                ],
+              );
+            } else if (snapshot.hasError) {
+              return Text('エラーだよ！');
+            }else{
+              return Center(child: CircularProgressIndicator());
+            }
+          }
         ),
       ),
     );
   }
-  double _kPickerSheetHeight = 216.0;
-  Widget _buildBottomPicker(Widget picker) {
-    return Container(
-      height: _kPickerSheetHeight,
-      padding: const EdgeInsets.only(top: 6.0),
-      color: CupertinoColors.white,
-      child: DefaultTextStyle(
-        style: const TextStyle(
-          color: CupertinoColors.black,
-          fontSize: 22.0,
-        ),
-        child: GestureDetector(
-          // Blocks taps from propagating to the modal sheet and popping.
-          onTap: () {},
-          child: SafeArea(
-            top: false,
-            child: picker,
-          ),
-        ),
-      ),
-    );
+  Future<DocumentSnapshot> getUserData() async {
+    var currentUserEmail = loggedInUser!.email;
+    // print("今のユーザーIDは、$currentUid です");
+    var querySnapshot = await FirebaseFirestore.instance
+        .collection("userDetails")
+        .doc(currentUserEmail)
+        .get();
+    print(querySnapshot);
+    return querySnapshot; //QuerySnapshot(条件に一致したdocumentsの集まり)
   }
+  // double _kPickerSheetHeight = 216.0;
+  // Widget _buildBottomPicker(Widget picker) {
+  //   return Container(
+  //     height: _kPickerSheetHeight,
+  //     padding: const EdgeInsets.only(top: 6.0),
+  //     color: CupertinoColors.white,
+  //     child: DefaultTextStyle(
+  //       style: const TextStyle(
+  //         color: CupertinoColors.black,
+  //         fontSize: 22.0,
+  //       ),
+  //       child: GestureDetector(
+  //         // Blocks taps from propagating to the modal sheet and popping.
+  //         onTap: () {},
+  //         child: SafeArea(
+  //           top: false,
+  //           child: picker,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }
 //
 showPickerNumber(BuildContext context) {
