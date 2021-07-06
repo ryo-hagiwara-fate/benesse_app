@@ -1,4 +1,5 @@
-# オンラインハッカソン用  
+# benesse_app
+ハッカソン用リポジトリ  
 
 # template_app
 
